@@ -11,11 +11,11 @@ import 'antd/dist/antd.css';
 initMiddleware();
 
 ReactDOM.render(
-  <AuthProvider>
+  // <AuthProvider>
     <BrowserRouter>
       <App />
-    </BrowserRouter>
-  </AuthProvider>,
+    </BrowserRouter>,
+  // </AuthProvider>,
   document.getElementById('root')
 );
 
