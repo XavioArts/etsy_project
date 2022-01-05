@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../providers/AuthProvider";
+import {Button} from "antd";
 
 const Home = () => {
-
-    const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
     // const logOut = (e) => {
@@ -14,10 +12,9 @@ const Home = () => {
     return (
         <div>
             <h1>Home</h1>
-            {JSON.stringify(auth)}
-            <button onClick={()=>navigate("/login")} >Log In</button>
-            <button onClick={()=>auth.handleLogout(navigate)} >Log Out</button>
-            <button onClick={()=>navigate("/protected")}>User View</button>
+            <Button type="primary" >Log In</Button>
+            <Button >Log Out</Button>
+            <Button type="text" onClick={()=>navigate("/public")}>User View</Button>
         </div>
     );
 };

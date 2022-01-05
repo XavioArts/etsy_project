@@ -6,15 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import AuthProvider from './providers/AuthProvider';
 import { initMiddleware } from "devise-axios";
+import 'antd/dist/antd.css';
 
 initMiddleware();
 
 ReactDOM.render(
-  <AuthProvider>
+  // <AuthProvider>
     <BrowserRouter>
       <App />
-    </BrowserRouter>
-  </AuthProvider>,
+    </BrowserRouter>,
+  // </AuthProvider>,
   document.getElementById('root')
 );
 
