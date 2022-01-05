@@ -12,7 +12,7 @@ const Home = () => {
     return (
         <div>
             <h1>Home</h1>
-            <Button type="primary" onClick={()=>navigate("/login")} >Log In</Button>
+            <Button type="primary" >Log In</Button>
             <Button >Log Out</Button>
             <Button type="text" onClick={()=>navigate("/public")}>User View</Button>
         </div>
