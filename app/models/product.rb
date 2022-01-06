@@ -21,4 +21,9 @@ class Product < ApplicationRecord
     .order('category')
   end
 
+  ## could do this for categories and then do a sql call for the specific category.
+  ## idk if we need to do it this way
+  # SELECT DISTINCT category
+  # FROM products;
+
 end
