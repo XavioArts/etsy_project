@@ -9,12 +9,27 @@ const Products = () => {
     const getProducts = async () => {
         try {
             let res = await axios.get("/api/products");
-            setProducts(res.data);
+            let normalized = normalizeData(res.data);
+            // setProducts(res.data);
+            setProducts(normalized);
         } catch (err) {
             console.log(err.response);
             alert("there was an error getting products");
         }
     }
+
+    const normalizeData = (data) => {
+        let seller_ids = data.map((i) => i.id);
+        let sellersUnique = [... new Set(seller_ids)];
+        let newData = sellersUnique.map((id) => {
+            let products = data.filter((i) => i.seller_id === id);
+            let cleanProducts = products.map((p) => {
+                return {id: p.id, price: p.price, description: p.description, category: p.category}
+            });
+            return {name: products[0].name, email: products[0].email, id: products[0].id, products: cleanProducts};
+        });
+        return newData;
+    };
 
     return (
         <div>
