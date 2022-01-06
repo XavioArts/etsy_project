@@ -26,4 +26,17 @@ class Product < ApplicationRecord
   # SELECT DISTINCT category
   # FROM products;
 
+  ## other way
+
+  def self.get_categories
+    select('DISTINCT category')
+  end
+
+  def self.by_category(category)
+    select('products.id, seller_id, price, description, category, s.name, s.email')
+    .joins('JOIN sellers AS s
+    ON s.id = products.seller_id')
+    .where('products.category = ?', category)
+  end
+
 end
