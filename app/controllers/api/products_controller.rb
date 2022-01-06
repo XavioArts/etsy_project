@@ -4,4 +4,8 @@ class Api::ProductsController < ApplicationController
         render json: Product.all_by_seller
     end
 
+    def categories
+        render json: Product.all_by_category
+    end
+
 end

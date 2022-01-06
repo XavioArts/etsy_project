@@ -14,4 +14,11 @@ class Product < ApplicationRecord
     .order('s.id')
   end
 
+  def self.all_by_category
+    select('products.id, seller_id, price, description, category, s.name, s.email')
+    .joins('JOIN sellers AS s
+    ON s.id = products.seller_id')
+    .order('category')
+  end
+
 end
