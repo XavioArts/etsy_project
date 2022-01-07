@@ -12,9 +12,9 @@ const Home = () => {
     return (
         <div>
             <h1>Home</h1>
-            <Button type="primary" >Log In</Button>
-            <Button >Log Out</Button>
-            <Button type="text" onClick={()=>navigate("/public")}>User View</Button>
+            <Button type="primary" >Test button (primary)</Button>
+            <Button >test button</Button>
+            <Button type="text" onClick={()=>navigate("/products")}>Product page(text button)</Button>
         </div>
     );
 };
