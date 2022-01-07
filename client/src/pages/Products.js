@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button } from "antd";
+import { Button, Card, List } from "antd";
+import Title from "antd/lib/typography/Title";
 
 const Products = () => {
 
@@ -20,7 +21,7 @@ const Products = () => {
 
     const normalizeData = (data) => {
         let seller_ids = data.map((i) => i.id);
-        let sellersUnique = [... new Set(seller_ids)];
+        let sellersUnique = [...new Set(seller_ids)];
         let newData = sellersUnique.map((id) => {
             let products = data.filter((i) => i.seller_id === id);
             let cleanProducts = products.map((p) => {
@@ -31,14 +32,46 @@ const Products = () => {
         return newData;
     };
 
+    const renderProducts = (product) => {
+        return (
+        <List.Item>
+            <Card size="small" title={product.category} extra={`$${product.price}`} >
+                <p>{product.description}</p>
+            </Card>
+        </List.Item>
+        );
+    };
+
+    const renderSellers = () => {
+        return products.map((s) => {
+            return (
+                <>
+                <div>
+                    <Title>{s.name}</Title>
+                    <Title level={3} >{s.email}</Title>
+                </div>
+                <List grid={{
+                    gutter: 16,
+                    xs: 1,
+                    sm: 2,
+                    md: 4,
+                    lg: 4,
+                    xl: 6,
+                    xxl:3,
+                }}
+                dataSource={s.products}
+                renderItem={renderProducts} />
+                <hr/>
+                </>
+            )
+        })
+    }
+
     return (
         <div>
             <h1>Products Page</h1>
             <Button onClick={()=>getProducts()} >Get Products</Button>
-            {products && 
-                <div>
-                    <p>{JSON.stringify(products)}</p>
-                </div>}
+            {products && renderSellers()}
         </div>
     );
 };

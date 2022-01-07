@@ -14,6 +14,9 @@ class Product < ApplicationRecord
     .order('s.id')
   end
 
+  ## || ---------------------------------------------------------------------- ||
+  ## vv this way sends alot of data to filter on the front end (not very good) vv 
+
   def self.all_by_category
     select('products.id, seller_id, price, description, category, s.name, s.email')
     .joins('JOIN sellers AS s
