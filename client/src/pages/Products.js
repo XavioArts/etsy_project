@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Card, List } from "antd";
+import { Button, Card, List, Spin } from "antd";
 import Title from "antd/lib/typography/Title";
+import { PageDiv, SellerDiv } from "../components/Styles";
 
 const Products = () => {
 
     const [products, setProducts] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(()=> {
+        getProducts();
+    },[]);
 
     const getProducts = async () => {
         try {
@@ -13,6 +19,7 @@ const Products = () => {
             let normalized = normalizeData(res.data);
             // setProducts(res.data);
             setProducts(normalized);
+            setLoading(false)
         } catch (err) {
             console.log(err.response);
             alert("there was an error getting products");
@@ -46,10 +53,10 @@ const Products = () => {
         return products.map((s) => {
             return (
                 <>
-                <div>
-                    <Title>{s.name}</Title>
-                    <Title level={3} >{s.email}</Title>
-                </div>
+                <SellerDiv>
+                    <Title style={{color: "#FFFFFF"}} level={1} >{s.name}</Title>
+                    <Title style={{color: "#FFFFFF"}} level={4} >{s.email}</Title>
+                </SellerDiv>
                 <List grid={{
                     gutter: 16,
                     xs: 1,
@@ -67,12 +74,20 @@ const Products = () => {
         })
     }
 
+    if (loading) {
+        return (
+            <div style={{margin: "auto", padding: "100px", textAlign: "center"}} >
+                <Spin size="large" />
+            </div>
+        )
+    }
+
     return (
-        <div>
-            <h1>Products Page</h1>
-            <Button onClick={()=>getProducts()} >Get Products</Button>
+        <PageDiv>
+            <Title style={{textAlign: "center"}} >Products Page</Title>
+            {/* <Button onClick={()=>getProducts()} >Get Products</Button> */}
             {products && renderSellers()}
-        </div>
+        </PageDiv>
     );
 };
 
