@@ -7,6 +7,8 @@ const NavBar = () => {
         <div style={styles.container} > 
             <Link to="/" style={styles.link} >Home</Link>
             <Link to="/products" style={styles.link} >Products</Link>
+            <Link to="/category" style={styles.link} >Categories</Link>
+            <Link to="/find" style={styles.link} >Find Products</Link>
         </div>
     );
 };

@@ -13,9 +13,9 @@ const Home = () => {
     return (
         <PageDiv>
             <h1>Home</h1>
-            <Button type="primary" >Test button (primary)</Button>
-            <Button >test button</Button>
-            <Button type="text" onClick={()=>navigate("/products")}>Product page(text button)</Button>
+            <Button type="default" onClick={()=>navigate("/products")}>Product page</Button>
+            <Button type="primary" onClick={()=>navigate("/category")} >Category Page</Button>
+            <Button type="primary" onClick={()=>navigate("/find")} >Find Products Page</Button>
         </PageDiv>
     );
 };
