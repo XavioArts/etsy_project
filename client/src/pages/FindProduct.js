@@ -1,4 +1,4 @@
-import { Spin } from "antd";
+import { Button, Card, List, Select, Spin } from "antd";
 import Title from "antd/lib/typography/Title";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -8,7 +8,9 @@ const FindProduct = () => {
 
     const [data, setData] = useState(null);
     const [sellers, setSellers] = useState(null);
+    const [selectedSeller, setSelectedSeller] = useState(null);
     const [buyers, setBuyers] = useState(null);
+    const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
 
 
@@ -56,6 +58,51 @@ const FindProduct = () => {
         return newData;
     }
 
+    const selectSeller = (value) => {
+        setBuyers(null);
+        let selected = data.find((s)=>s.name === value);
+        // console.log(selected)
+        setSelectedSeller(selected);
+        let selectedBuyers = selected.buyers.map((b)=>b.buyer_name);
+        setBuyers(selectedBuyers);
+    };
+
+    const selectBuyer = (value) => {
+        let selected = selectedSeller.buyers.find((b)=>b.buyer_name === value);
+        // if (selected.desired_cat === null)
+        setProducts(selected.products);
+    };
+
+    const renderProducts = (p) => {
+        // console.log(products);
+        // return products.map((p)=> {
+            return (
+                <List.Item key={p.id} >
+                    <Card size="small" title={p.category} extra={`$${p.price}`} >
+                        <p>{p.description}</p>
+                    </Card>
+                </List.Item>
+            )
+        // })
+    }
+
+    const renderBuyerSelect = () => {
+        if (!buyers) {
+            return <Select style={{width: 200}} placeholder="Please select a seller..." disabled />
+        }
+        return (
+            <Select style={{width: 200}} placeholder="Select a buyer" onChange={selectBuyer} >
+               {buyers.map((b)=><Select.Option key={b} value={b} >{b}</Select.Option>)}
+            </Select>
+        )
+    }
+
+    const reset = () => {
+        setBuyers(null);
+        setProducts(null);
+        setSelectedSeller(null);
+    }
+
     if (loading) {
         return (
             <div style={{margin: "auto", padding: "100px", textAlign: "center"}} >
@@ -67,6 +114,26 @@ const FindProduct = () => {
     return (
         <PageDiv>
             <Title>Find Product Page</Title>
+            <div>
+                <Select style={{width: 200}} placeholder="Select a seller" onChange={selectSeller} >
+                    {sellers.map((s)=><Select.Option key={s} value={s} >{s}</Select.Option>)}
+                </Select>
+                {renderBuyerSelect()}
+                <Button onClick={reset} >Clear</Button>
+            </div>
+            {products &&
+                <List grid={{
+                    gutter: 16,
+                    xs: 1,
+                    sm: 2,
+                    md: 4,
+                    lg: 4,
+                    xl: 6,
+                    xxl:3,
+                }} 
+                dataSource={products}
+                renderItem={renderProducts} />
+            }
             <code>{JSON.stringify(sellers)}</code>
             <hr/>
             <code>{JSON.stringify(data)}</code>
