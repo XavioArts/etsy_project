@@ -41,7 +41,7 @@ const Products = () => {
 
     const renderProducts = (product) => {
         return (
-        <List.Item>
+        <List.Item key={product.id} >
             <Card size="small" title={product.category} extra={`$${product.price}`} >
                 <p>{product.description}</p>
             </Card>
