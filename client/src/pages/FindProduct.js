@@ -69,8 +69,13 @@ const FindProduct = () => {
 
     const selectBuyer = (value) => {
         let selected = selectedSeller.buyers.find((b)=>b.buyer_name === value);
-        // if (selected.desired_cat === null)
-        setProducts(selected.products);
+        if (selected.desired_cat === null) {
+            setProducts(selected.products);
+        }
+        else {
+            let filteredProducts = selected.products.filter((p)=>selected.desired_cat.includes(p.category));
+            setProducts(filteredProducts);
+        }
     };
 
     const renderProducts = (p) => {
@@ -134,9 +139,9 @@ const FindProduct = () => {
                 dataSource={products}
                 renderItem={renderProducts} />
             }
-            <code>{JSON.stringify(sellers)}</code>
+            {/* <code>{JSON.stringify(sellers)}</code>
             <hr/>
-            <code>{JSON.stringify(data)}</code>
+            <code>{JSON.stringify(data)}</code> */}
         </PageDiv>
     );
 };
